@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     # my-apps
     'apps.core',
+    'apps.cnpj_lookup',
 ]
 
 MIDDLEWARE = [
