@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # third-apps
     'crispy_forms',
+    'crispy_bootstrap4',
     # my-apps
     'apps.core',
     'apps.cnpj_lookup',

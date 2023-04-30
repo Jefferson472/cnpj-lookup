@@ -1,3 +1,4 @@
+import requests
 from django.db import models
 
 
@@ -17,3 +18,9 @@ class Empresa(models.Model):
 
     def __str__(self):
         return f'{self.razao_social} ({self.cnpj})'
+
+    def buscar_dados_cnpj(self):
+        url = f"https://www.receitaws.com.br/v1/cnpj/{self.cnpj}"
+        response = requests.get(url)
+        data = response.json()
+        return data

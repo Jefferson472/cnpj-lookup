@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Lista de empresas</h1>
+
+  <a href="{% url 'cnpj-lookup:empresa-create' %}" class="btn btn-success mb-3">Nova empresa</a>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Razão Social</th>
+        <th scope="col">CNPJ</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for empresa in object_list %}
+        <tr>
+          <th scope="row">{{ forloop.counter }}</th>
+          <td>{{ empresa.razao_social }}</td>
+          <td>{{ empresa.cnpj }}</td>
+          <td>
+            <a href="{% url 'cnpj-lookup:empresa-detail' pk=empresa.pk %}" class="btn btn-info btn-sm mr-2">Detalhes</a>
+            <a href="{% url 'cnpj-lookup:empresa-update' pk=empresa.pk %}" class="btn btn-primary btn-sm mr-2">Editar</a>
+            <a href="{% url 'cnpj-lookup:empresa-delete' pk=empresa.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">Nenhuma empresa cadastrada.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

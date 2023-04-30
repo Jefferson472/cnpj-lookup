@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Detalhes da empresa</h1>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <th>Nome:</th>
+        <td>{{ empresa.nome }}</td>
+      </tr>
+      <tr>
+        <th>CNPJ:</th>
+        <td>{{ empresa.cnpj }}</td>
+      </tr>
+      <tr>
+        <th>Data de abertura:</th>
+        <td>{{ empresa.data_abertura }}</td>
+      </tr>
+      <tr>
+        <th>Endereço:</th>
+        <td>{{ empresa.endereco }}</td>
+      </tr>
+      <tr>
+        <th>Telefone:</th>
+        <td>{{ empresa.telefone }}</td>
+      </tr>
+      <tr>
+        <th>E-mail:</th>
+        <td>{{ empresa.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <a href="{% url 'cnpj-lookup:empresa-update' empresa.pk %}" class="btn btn-primary">Editar</a>
+  <a href="{% url 'cnpj-lookup:empresa-delete' empresa.pk %}" class="btn btn-danger">Excluir</a>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <h1>Atualizar empresa</h1>
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+  
+    <!-- Campo de sócios -->
+    <div class="form-group">
+      <label for="{{ socios.id_for_label }}">Sócios</label>
+      {{ form.management_form }}
+      {{ socios|crispy }}
+    </div>
+
+    <button type="submit" class="btn btn-block btn-primary">Salvar</button>
+  </form>
+
+{% endblock %}
