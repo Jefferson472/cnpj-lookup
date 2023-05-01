@@ -16,31 +16,6 @@ DATABASES = {
     }
 }
 
-CSRF_TRUSTED_ORIGINS = []
-CSRF_COOKIE_SECURE = True # cookie seguro
-
-
-# EMAIL CONFIG
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'email-ssl.com.br'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
-# END EMAIL CONFIG
-
-# MANAGER CONFIGURATION
-# Admin and managers for this project. These people receive private site
-# alerts.
-ADMINS = (
-    (env('ADMIN_NAME'), env('ADMIN_EMAIL')),
-)
-
-MANAGERS = ADMINS
-# END MANAGER CONFIGURATION
-
-
 # WHITENOISE CONFIG
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
