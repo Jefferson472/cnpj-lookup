@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: cnpj-lookup
+    env: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn --pythonpath src setup.wsgi
