@@ -1,12 +1,11 @@
-from gettext import translation
-from django.forms import formset_factory
+from django.db import transaction
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import redirect
 from django.views.generic import CreateView, UpdateView, ListView, DetailView, DeleteView
 from django.urls import reverse_lazy
 
 from apps.cnpj_lookup.models import Empresa, Socio
-from apps.cnpj_lookup.forms import EmpresaForm, EmpresaDetalhesForm, SocioForm, EmpresaSocioForm
+from apps.cnpj_lookup.forms import EmpresaForm, EmpresaDetalhesForm, SocioForm, SocioFormSet
 
 
 class EmpresaCreateView(CreateView):
@@ -44,12 +43,11 @@ class EmpresaCreateView(CreateView):
 
 class EmpresaDetailView(DetailView):
     model = Empresa
-    template_name = 'cnpj_lookup/empresa_detalhes.html'
+    template_name = 'cnpj_lookup/empresa_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['socio_form'] = SocioForm()
-        context['empresa_socio_form'] = EmpresaSocioForm(instance=self.object)
         return context
 
 
@@ -62,18 +60,17 @@ class EmpresaUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         object = context['object']
-        SocioFormSet = formset_factory(SocioForm, extra=2)
         if self.request.POST:
-            context['socios'] = SocioFormSet(self.request.POST)
+            context['socios'] = SocioFormSet(self.request.POST, instance=object)
         else:
             context['form'] = EmpresaDetalhesForm(instance=object)
-            context['socios'] = SocioFormSet()
+            context['socios'] = SocioFormSet(instance=object)
         return context
 
     def form_valid(self, form):
         context = self.get_context_data()
         socios = context['socios']
-        with translation.atomic():
+        with transaction.atomic():
             self.object = form.save()
             if socios.is_valid():
                 socios.instance = self.object
@@ -90,34 +87,3 @@ class EmpresaDeleteView(DeleteView):
 class EmpresaListView(ListView):
     model = Empresa
     template_name = 'cnpj_lookup/empresa_list.html'
-
-
-class SocioCreateView(CreateView):
-    model = Socio
-    form_class = SocioForm
-    template_name = 'cnpj_lookup/socio_create.html'
-
-    def form_valid(self, form):
-        empresa_pk = self.kwargs['empresa_pk']
-        empresa = get_object_or_404(Empresa, pk=empresa_pk)
-        socio = form.save(commit=False)
-        socio.empresa = empresa
-        socio.save()
-        return redirect('empresa_detalhes', pk=empresa.pk)
-
-
-class SocioDeleteView(DeleteView):
-    model = Socio
-    template_name = 'cnpj_lookup/socio_confirm_delete.html'
-
-    def get_success_url(self):
-        empresa_pk = self.kwargs['empresa_pk']
-        return reverse_lazy('empresa_detalhes', kwargs={'pk': empresa_pk})
-
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        empresa_pk = self.kwargs['empresa_pk']
-        empresa = get_object_or_404(Empresa, pk=empresa_pk)
-        self.object.empresa = None
-        self.object.save()
-        return redirect('empresa_detalhes', pk=empresa.pk)
