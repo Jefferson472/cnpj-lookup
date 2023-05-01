@@ -1,5 +1,5 @@
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView
 
 
-class HomePage(TemplateView):
-    template_name = 'home_page.html'
+class HomePage(RedirectView):
+    url = '/empresas/'
