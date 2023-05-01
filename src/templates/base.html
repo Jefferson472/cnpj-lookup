@@ -26,7 +26,15 @@
   </head>
 
   <body>
-    {% block content %}{% endblock %}
+    {% include '_partials/_navbar.html' %}
+    <div class="container-fluid">
+      <div class="row">
+        {% include '_partials/_menu.html' %}
+        <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-4">
+          {% block content %}{% endblock %}
+        </main>
+      </div>
+    </div>
 
     <!-- ##### All Javascript Files ##### -->
 
