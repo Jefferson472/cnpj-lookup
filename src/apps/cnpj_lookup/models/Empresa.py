@@ -22,5 +22,7 @@ class Empresa(models.Model):
     def buscar_dados_cnpj(self):
         url = f"https://www.receitaws.com.br/v1/cnpj/{self.cnpj}"
         response = requests.get(url)
+        if response.status_code == 429:
+            return response.status_code
         data = response.json()
         return data

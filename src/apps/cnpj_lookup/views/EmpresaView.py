@@ -16,6 +16,9 @@ class EmpresaCreateView(CreateView):
     def form_valid(self, form):
         empresa = form.save(commit=False)
         data = empresa.buscar_dados_cnpj()
+        if data == 429:
+            form.add_error(None, 'Essa API permite somente 3 consultas por minuto. Aguarde e tente novamente')
+            return self.form_invalid(form)
         empresa.razao_social = data['nome']
         empresa.nome_fantasia = data['fantasia']
         empresa.telefone = data['telefone']
