@@ -6,13 +6,15 @@
 
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form|crispy }}
+    {% crispy form %}
   
     <!-- Campo de sócios -->
     <div class="form-group">
       <h2>Sócios</h2>
       {{ socios.management_form }}
-      {{ socios|crispy }}
+      {% for socio in socios.forms %}
+        {% crispy socio %}
+      {% endfor %}
     </div>
 
     <button type="submit" class="btn btn-block btn-primary">Salvar</button>
