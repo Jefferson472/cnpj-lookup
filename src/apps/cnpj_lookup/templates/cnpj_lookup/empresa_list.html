@@ -21,7 +21,7 @@
           <th scope="row">{{ forloop.counter }}</th>
           <td>{{ empresa.nome_fantasia }}</td>
           <td>{{ empresa.razao_social }}</td>
-          <td>{{ empresa.cnpj }}</td>
+          <td>{{ empresa.cnpj|slice:'0:2' }}.{{ empresa.cnpj|slice:'2:5' }}.{{ empresa.cnpj|slice:'5:8' }}/{{ empresa.cnpj|slice:'8:12' }}-{{ empresa.cnpj|slice:'12:14' }}</td>
           <td>
             <a href="{% url 'cnpj-lookup:empresa-update' pk=empresa.pk %}" class="btn btn-sm"><i class="bi bi-eye"></i></a>
             <a href="{% url 'cnpj-lookup:empresa-delete' pk=empresa.pk %}" class="btn btn-sm"><i class="bi bi-trash"></i></a>
