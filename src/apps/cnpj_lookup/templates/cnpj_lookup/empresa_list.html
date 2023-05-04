@@ -21,8 +21,8 @@
           <td>{{ empresa.razao_social }}</td>
           <td>{{ empresa.cnpj }}</td>
           <td>
-            <a href="{% url 'cnpj-lookup:empresa-update' pk=empresa.pk %}" class="btn btn-primary btn-sm mr-2">Detalhes</a>
-            <a href="{% url 'cnpj-lookup:empresa-delete' pk=empresa.pk %}" class="btn btn-danger btn-sm">Excluir</a>
+            <a href="{% url 'cnpj-lookup:empresa-update' pk=empresa.pk %}" class="btn btn-sm"><i class="bi bi-eye"></i></a>
+            <a href="{% url 'cnpj-lookup:empresa-delete' pk=empresa.pk %}" class="btn btn-sm"><i class="bi bi-trash"></i></a>
           </td>
         </tr>
       {% empty %}
