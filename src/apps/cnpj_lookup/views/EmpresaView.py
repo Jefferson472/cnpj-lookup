@@ -1,11 +1,11 @@
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
-from django.views.generic import CreateView, UpdateView, ListView, DetailView, DeleteView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.urls import reverse_lazy
 
 from apps.cnpj_lookup.models import Empresa, Socio
-from apps.cnpj_lookup.forms import EmpresaForm, EmpresaDetalhesForm, SocioForm, SocioFormSet
+from apps.cnpj_lookup.forms import EmpresaForm, EmpresaDetalhesForm, SocioFormSet
 
 
 class EmpresaCreateView(CreateView):
@@ -42,16 +42,6 @@ class EmpresaCreateView(CreateView):
             )
 
         return redirect('cnpj-lookup:empresa-detail', pk=empresa.pk)
-
-
-class EmpresaDetailView(DetailView):
-    model = Empresa
-    template_name = 'cnpj_lookup/empresa_detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['socio_form'] = SocioForm()
-        return context
 
 
 class EmpresaUpdateView(UpdateView):
