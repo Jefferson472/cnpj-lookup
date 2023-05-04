@@ -1,11 +1,11 @@
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
-from django.views.generic import CreateView, UpdateView, ListView, DetailView, DeleteView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from django.urls import reverse_lazy
 
 from apps.cnpj_lookup.models import Empresa, Socio
-from apps.cnpj_lookup.forms import EmpresaForm, EmpresaDetalhesForm, SocioForm, SocioFormSet
+from apps.cnpj_lookup.forms import EmpresaForm, EmpresaDetalhesForm, SocioFormSet
 
 
 class EmpresaCreateView(CreateView):
